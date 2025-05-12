@@ -1,7 +1,7 @@
 # Cadrage du projet
 
 ## Entrée
-- Type : image (224×224 JPEG) / texte (.txt)
+- Type : texte (.txt)
 
 ## Sortie
 - Label binaire (0/1) ou multiclasses (N catégories)
