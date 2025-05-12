@@ -1,0 +1,5 @@
+{
+    "type": "NLP",
+    "endpoint": "https://api.exemple.com/data",
+    "params": { "q": "#yourhashtag", "limit": 50 }
+  }
