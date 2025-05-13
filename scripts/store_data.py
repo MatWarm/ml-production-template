@@ -1,9 +1,7 @@
-import json
 from pathlib import Path
 from sqlalchemy import create_engine, Column, Integer, String, Text
 from sqlalchemy.orm import declarative_base, sessionmaker
 from sqlalchemy import inspect
-from pymongo import MongoClient
 import pandas as pd
 
 # --- SQL setup ---
@@ -129,7 +127,7 @@ def store_data():
                 session.add(data)
                 session.commit()
         print(f"Data from {file.name} stored successfully.")
-        print(f"===")
+        print("===")
 
 
 if __name__ == "__main__":

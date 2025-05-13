@@ -1,6 +1,4 @@
 import sqlite3
-from sqlalchemy import inspect
-import os
 
 
 def test_sql_db_exists():
