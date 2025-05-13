@@ -8,6 +8,8 @@ import pandas as pd
 
 # --- SQL setup ---
 Base = declarative_base()
+
+
 class Annotation(Base):
     __tablename__ = "annotation"
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -52,46 +54,58 @@ class TermBanks(Base):
     WORD = Column(String(50))
     EXAMPLE = Column(String(50))
 
+
 def load_data_aircraft_annotation(item):
-    annotation = Annotation(ANNOTATION_NUMBER=item["IDENT"],
-                                ACTION=item["ACTION"],
-                                PROBLEM=item["PROBLEM"])
+    annotation = Annotation(
+        ANNOTATION_NUMBER=item["IDENT"], ACTION=item["ACTION"], PROBLEM=item["PROBLEM"]
+    )
     return annotation
+
 
 def load_data_abbreviation(item):
-    annotation = Abbreviation(Abbreviation_Code=item["ABBREVIATION_CODE"],
-                                Abbreviated=item["ABBREVIATED"],
-                                Standard_Description=item["STANDARD_DESCRIPTION"])
+    annotation = Abbreviation(
+        Abbreviation_Code=item["ABBREVIATION_CODE"],
+        Abbreviated=item["ABBREVIATED"],
+        Standard_Description=item["STANDARD_DESCRIPTION"],
+    )
     return annotation
+
 
 def load_data_grammar(item):
-    annotation = Grammar(word=item["WORD"],
-                                Description=item["DESCRIPTION"],
-                                Compound=item["COMPOUND"],
-                                Lemma=item["LEMMA"],
-                                Stem=item["STEM"],
-                                Part_of_Speech=item["PART_OF_SPEECH"])
-                         
+    annotation = Grammar(
+        word=item["WORD"],
+        Description=item["DESCRIPTION"],
+        Compound=item["COMPOUND"],
+        Lemma=item["LEMMA"],
+        Stem=item["STEM"],
+        Part_of_Speech=item["PART_OF_SPEECH"],
+    )
+
     return annotation
+
 
 def load_data_morphosyntactic(item):
-    annotation = Morphosyntactic(word=item["WORD"],
-                                Description=item["DESCRIPTION"],
-                                Compound=item["COMPOUND"],
-                                Lemma=item["LEMMA"],
-                                Stem=item["STEM"],
-                                Part_of_Speech=item["PART_OF_SPEECH"])
+    annotation = Morphosyntactic(
+        word=item["WORD"],
+        Description=item["DESCRIPTION"],
+        Compound=item["COMPOUND"],
+        Lemma=item["LEMMA"],
+        Stem=item["STEM"],
+        Part_of_Speech=item["PART_OF_SPEECH"],
+    )
     return annotation
 
+
 def load_data_term_banks(item):
-    annotation = TermBanks(word=item["WORD"],
-                                Example=item["EXAMPLE"])
+    annotation = TermBanks(word=item["WORD"], Example=item["EXAMPLE"])
     return annotation
+
 
 engine = create_engine("sqlite:///data/data.db")
 Session = sessionmaker(bind=engine)
 
 session = Session()
+
 
 def store_data():
     for file in Path("data/raw").glob("*.csv"):
@@ -99,7 +113,7 @@ def store_data():
         df = pd.read_csv(f"data/raw/{file.name}")
         with Session() as session:
             for _, row in df.iterrows():
-                
+
                 match file.name:
                     case "Aircraft_Annotation_DataFile.csv":
                         data = load_data_aircraft_annotation(row)
@@ -116,7 +130,8 @@ def store_data():
                 session.commit()
         print(f"Data from {file.name} stored successfully.")
         print(f"===")
-    
+
+
 if __name__ == "__main__":
     store_data()
     inspector = inspect(engine)

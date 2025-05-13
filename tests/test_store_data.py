@@ -2,6 +2,7 @@ import sqlite3
 from sqlalchemy import inspect
 import os
 
+
 def test_sql_db_exists():
     conn = sqlite3.connect("data/data.db")
     cursor = conn.cursor()
@@ -16,6 +17,7 @@ def test_sql_db_exists():
     assert "morphosyntactic" in tables
     assert "term_banks" in tables
     conn.close()
+
 
 if __name__ == "__main__":
     test_sql_db_exists()
