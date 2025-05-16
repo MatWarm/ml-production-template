@@ -1,0 +1,4 @@
+{
+    "numeric": ["ANNOTATION_NUMBER"],
+    "text": ["ACTION","PROBLEM"]
+}
